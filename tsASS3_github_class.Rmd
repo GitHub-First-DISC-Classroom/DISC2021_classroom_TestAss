@@ -1,0 +1,45 @@
+---
+title: "Test Assignment for Github Classroom"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+# Generate time series
+n  <- 100   # length of time series
+m  <- 0     # series mean
+sd <- 1     # series standard deviation
+
+# Code below from Bookdown/Napier 
+# Gaussian
+Norm_white_noise <- rnorm(n)
+mean_line <- rep(m,n)
+# Exponential 
+Exp_white_noise <- rexp(n)
+# Random walk
+Norm_ran_walk <- rep(0,n) # Gaussian
+Exp_ran_walk <- rep(0,n)
+
+for (i in 2:n) {
+  Norm_ran_walk[i] <- Norm_ran_walk[(i-1)] + rnorm(1)
+  Exp_ran_walk[i] <- Exp_ran_walk[(i-1)] + rexp(1)
+}
+
+# moving average
+Norm_mov_avg <- filter(Norm_white_noise,sides=2,rep(1/3,3))  #TAS+Apps: 13
+
+plot(Norm_white_noise, type="o")
+lines(mean_line)
+
+plot(Norm_mov_avg, type="o")
+lines(mean_line)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
